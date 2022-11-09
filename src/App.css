@@ -1,0 +1,15 @@
+.app {
+    width:100vw;
+    height:100vh;
+}
+.outline {
+    border:1px solid black;
+}
+
+.local {
+    width:100vw;
+    height:100vh;
+}
+.no-decor {
+    text-decoration:none;
+}
