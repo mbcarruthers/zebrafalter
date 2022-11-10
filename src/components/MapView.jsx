@@ -1,52 +1,70 @@
-import {observations} from "../data/observations.js";
-import React, {useEffect} from "react";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import "../style/MapView.css"
-const MapView = () => {
+import React,{useEffect} from "react";
+import { MapContainer, TileLayer, Popup,CircleMarker,LayersControl, LayerGroup } from 'react-leaflet'
+import {observations} from "../data/observations"
+import "../style/MapView.css";
 
-    const createObservationMarkers = () => {
-        const fl_observations = observations.fl_lepidoptera.map((entity) => {
-            const observationMarker = L.circleMarker([entity.latitude, entity.longitude], {
-                color: "red",
-                fillColor: "#f03",
-                fillOpacity: 0.5,
-                radius: 5,
-            })
-            observationMarker.bindPopup(`<small>Locale:${entity.place_guess}</small><br>
-                                        <small>${entity.species_guess}</small><br/>
-                                        <small>Date:${entity.observed_on}</small><br/>
-                                        <small>Cords:[${entity.latitude},${entity.longitude}</small>`)
-            observationMarker.addEventListener("onmouseover", (e) => {
-                console.log(`value of ${e} visible: ${e.visible}`);
-            })
-            return observationMarker;
-        })
-        return fl_observations;
-    }
+const ZlTid = 49766; // value 'constants' for temporary easeability in testing
+const MonarchTid = 48662;
 
-    useEffect(() => {
-        let map = L.map("mapview").setView([27.732161, -84.00095], 6);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map)
-
-        createObservationMarkers().forEach((entity) => {
-            //Todo: add event Listener
-            entity.addTo(map)
-        });
-
-        return () => {
-            map.remove();
+// getEntitiesByTaxonId
+// expects: number matching a taxon_id value of an entity observation on the database.
+// returns an array of entities matching the taxon_id
+// functions purpose is to simulate a database call so I can go ahead and create a control UI
+const getEntitiesByTaxonId = (tid) => {
+    let entities = [];
+    observations.fl_lepidoptera.forEach( (entity) => {
+        if(entity.taxon_id === tid) {
+            entities = [entity,...entities]
         }
     })
+    return entities;
+}
 
+
+// creates observation markers
+// expects: an array of entities matching the json struct Entity in helio project
+// returns an array of leaflet observation markers made for those entities given as an argument
+const createObservationMarkers = (entities) => {
+    return entities.map( (entity,idx) => {
+        return <CircleMarker center={[entity.latitude,entity.longitude]}
+                             color="red"
+                             fillColor="#f03"
+                             fillOpacity={0.5}
+                             radius={5}
+                              key={idx}>
+            <Popup className=" popup">
+                <small className="">Locale:{entity.place_guess}</small><br/>
+                <small>{entity.species_guess}</small><br/>
+                <small>Date:{entity.observed_on}</small><br/>
+                <small>Cords:[{entity.latitude},{entity.longitude}]</small>
+            </Popup>
+        </CircleMarker>
+    })
+
+}
+
+const MapView = () => {
 
     return(
-        <div id="mapview" className="">
+        <MapContainer center={[27.732161, -84.00095]} zoom={6} scrollWheelZoom={true} id="mapview">
+            <LayersControl position="topright"  className="layer-control">
+                <LayersControl.Overlay name="Monarch Observations">
+                    <LayerGroup>
+                        {createObservationMarkers(getEntitiesByTaxonId(MonarchTid))}
+                    </LayerGroup>
+                </LayersControl.Overlay>
+                <LayersControl.Overlay name="Zebra Longwing Observations">
+                    <LayerGroup>
+                        {createObservationMarkers(getEntitiesByTaxonId(ZlTid))}
+                    </LayerGroup>
+                </LayersControl.Overlay>
+            </LayersControl>
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
 
-        </div>
+        </MapContainer>
     )
 }
 
