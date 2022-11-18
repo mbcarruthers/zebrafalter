@@ -5,6 +5,7 @@ import MapControls from "./MapControls";
 
 import {observations} from "../data/observations"
 import "../style/MapView.css";
+import { LocalCache } from '../utility';
 
 const ZlTid = 49766; // value 'constants' for temporary easeability in testing
 const MonarchTid = 48662;
