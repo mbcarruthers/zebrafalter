@@ -15,9 +15,9 @@ const MonarchTid = 48662;
 // functions purpose is to simulate a database call so I can go ahead and create a control UI
 const getEntitiesByTaxonId = (tid) => {
     let entities = [];
-    observations.fl_lepidoptera.forEach( (entity) => {
-        if(entity.taxon_id === tid) {
-            entities = [entity,...entities]
+    LocalCache.get("entities")?.fl_lepidoptera.forEach((entity) => {
+        if (entity.taxon_id === tid) {
+            entities = [entity, ...entities]
         }
     })
     return entities;

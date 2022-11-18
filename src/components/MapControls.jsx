@@ -1,7 +1,8 @@
 import React from "react";
 import Control from "react-leaflet-custom-control";
 import "../style/MapView.css";
-import {CircleMarker, Popup} from "react-leaflet";
+import { LocalCache } from "../utility"
+import { CircleMarker, Popup } from "react-leaflet";
 import axios from "axios";
 
 // creates observation markers
@@ -30,25 +31,26 @@ const createObservationMarkers = (entities) => {
 
 
 const MapControls = () => {
-  const handleSubmitDate = () => {
-      const date1 = document.getElementById("date1");
-      const date2 = document.getElementById("date2")
-      console.log(date1.value);
-      console.log(date2.value);
-      fetch(`\/\/localhost:8000/entities/search?taxon_id=48662&date1="${date1}"&date2=${date2}`)
-          .then((res) => res.json())
-          .then((entities) => {
+    const handleSubmitDate = () => {
+        const date1 = document.getElementById("date1");
+        const date2 = document.getElementById("date2")
+        console.log(date1.value);
+        console.log(date2.value);
+        fetch(`\/\/localhost:8000/entities/search?taxon_id=48662&date1="${date1}"&date2=${date2}`)
+            .then((res) => res.json())
+            .then((entities) => {
+                LocalCache.set("entities", entities)
+            })
+            .catch((err) => console.error(err));
+    }
 
-          }).catch((err) => console.log(err));
-  }
-
-    return(
+    return (
         <Control prepend position="topright">
             <div className="form-group date-input-group">
                 <label htmlFor="date1" >Start date</label>
-                <input type="date" id="date1" aria-valuemin={2012-1-1} aria-valuemax={2022-12-31}/>
+                <input type="date" id="date1" aria-valuemin={2012 - 1 - 1} aria-valuemax={2022 - 12 - 31} />
                 <label htmlFor="date2">End date</label>
-                <input type="date" id="date2" aria-valuemin="2012-01-01" aria-valuemax="2022-12-31"/>
+                <input type="date" id="date2" aria-valuemin="2012-01-01" aria-valuemax="2022-12-31" />
                 <button className="btn" id="date-submit-button" onClick={handleSubmitDate}>Submit Dates</button>
             </div>
         </Control>
