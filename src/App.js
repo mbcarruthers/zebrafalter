@@ -34,4 +34,5 @@ const App = () => {
       </BrowserRouter>
   )
 }
+
 export default StoreProvider([MapStore.Provider], App);
