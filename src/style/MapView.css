@@ -36,6 +36,7 @@ html, body {
     color:#1f1f1f;
     border-radius:11px;
 }
+/* submit button for observation requests */
 #date-submit-button {
     display: inline-block;
     outline: 0;
@@ -51,8 +52,18 @@ html, body {
     font-weight: 400;
     color: #0F1111;
 }
+/* ajax observation request button hovering */
 #date-submit-button:hover{
     background-color: #F7FAFA;
     border-color: #D5D9D9;
+    box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.3);
+    transition-duration: 500ms ;
+    transition-property: box-shadow, transform ;
+    transition-timing-function: ease-in-out ;
 }
 
+/* box for the count of the search query */
+.count-box {
+    border:1px solid #1f1f1f;
+    color:#1f1f1f;
+}

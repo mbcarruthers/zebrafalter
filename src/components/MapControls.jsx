@@ -16,7 +16,9 @@ const MapControls = (props) => {
         fetch(`\/\/localhost:8000/entities/search?taxon_id=48662&date1="${d1}"&date2="${d2}"`)
             .then((res) => res.json())
             .then((entities) => {
-                mapStore.addEntities(entities);
+                if(entities.length !== 0) {
+                    mapStore.addEntities(entities)
+                }
             })
             .catch((err) => console.error(err));
     }
@@ -24,12 +26,12 @@ const MapControls = (props) => {
     return (
         <Control prepend position="topright">
             <div className="form-group date-input-group">
-
-                <label htmlFor="date1" >Start date</label>
-                <input type="date" id="date1" aria-valuemin={2012 - 1 - 1} aria-valuemax={2022 - 12 - 31} />
-                <label htmlFor="date2">End date</label>
-                <input type="date" id="date2" aria-valuemin="2012-01-01" aria-valuemax="2022-12-31" />
-                <button className="btn" id="date-submit-button" onClick={handleSubmitDate}>Submit Dates</button>
+                { entityStore.length === 0 ? undefined : <span className="badge count-box p-1 m-1">Count {entityStore.length}</span>}
+                <label htmlFor="date1" className="m-1">Start date</label>
+                <input type="date" id="date1" aria-valuemin={2012 - 1 - 1} aria-valuemax={2022 - 12 - 31} className="p-1"/>
+                <label htmlFor="date2" className="m-1">End date</label>
+                <input type="date" id="date2" aria-valuemin="2012-01-01" aria-valuemax="2022-12-31" className="p-1"/>
+                <button className="btn btn-outline-info m-1 p-1" id="date-submit-button" onClick={handleSubmitDate}>Submit Dates</button>
 
             </div>
         </Control>

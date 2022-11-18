@@ -5,12 +5,14 @@ import MapStore from "../MapStore";
 
 import React,{useContext} from "react";
 
-const ZlTid = 49766; // value 'constants' for temporary easeability in testing
+const ZlTid = 49766; // value 'constants' for temporary ease-ability in testing
 const MonarchTid = 48662;
 
-// creates observation markers
-// expects: an array of entities matching the json struct Entity in helio project
-// returns an array of leaflet observation markers made for those entities given as an argument
+// createObservationMarkers - creates observation markers
+// expects
+//  - an array of entities matching the json struct Entity in helio project
+// returns
+//  - an array of leaflet observation markers made for those entities given as an argument
 const createObservationMarkers = (entities) => {
     return entities.map( (entity,idx) => {
         let _link = `https://www.inaturalist.org/observations/${entity.id}`;
@@ -24,7 +26,7 @@ const createObservationMarkers = (entities) => {
                 <small className="">Locale:{entity.place_guess}</small><br/>
                 <small>{entity.species_guess}</small><br/>
                 <small>Date:{entity.observed_on}</small><br/>
-                <small><a href={_link}>iNaturalist</a></small>
+                <small><a target="_blank" rel="noopener noreferrer" href={_link}>iNaturalist</a></small>
             </Popup>
         </CircleMarker>
     })
@@ -33,7 +35,6 @@ const createObservationMarkers = (entities) => {
 
 
 // MapView serves as the view for the map component.
-// Todo: Remmove all control components, function, etc. into a seperate class
 const MapView = () => {
     const mapStore = useContext(MapStore.Context);
     let {entityStore} = mapStore.state;
@@ -53,6 +54,7 @@ const MapView = () => {
         </MapContainer>
     )
 }
+export default MapView;
 
 // const originalControls = () => {
 //     return(
@@ -70,6 +72,4 @@ const MapView = () => {
 //         </LayersControl>
 //     )
 // }
-
-export default MapView;
 
