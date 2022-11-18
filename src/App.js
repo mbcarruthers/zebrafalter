@@ -3,6 +3,8 @@ import "./App.css";
 import {BrowserRouter,Routes,Route,Link} from "react-router-dom";
 import Landing from "./components/Landing";
 import MapView from "./components/MapView";
+import MapStore from "./MapStore";
+import {StoreProvider} from "@shipt/osmosis";
 
 const App = () => {
   return(
@@ -32,4 +34,4 @@ const App = () => {
       </BrowserRouter>
   )
 }
-export default App;
+export default StoreProvider([MapStore.Provider], App);
