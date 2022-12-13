@@ -5,26 +5,16 @@
 .outline {
     border:1px solid black;
 }
-/* page item is for nav bar links styling */
-.page-item {
-    border-radius:8px;
-    border-top:1px solid ghostwhite;
-    border-right:1px solid ghostwhite;
-}
 
-.page-item:hover {
-    box-shadow:3px 3px 3px 0px #FFFFFF;
-    transition-duration: 500ms ;
-    border-left:1px solid ghostwhite;
-    transition-property: box-shadow, transform,border-left ;
-    transition-timing-function: ease-in-out ;
+/* change color: change color of nav links for hovering on and off */
+.change-color {
+    color:white;
+}
+.change-color:hover {
+    color:black;
 }
 .page-item:not(:hover) {
-    box-shadow: 0px 0px 0px 0px #FFFFFF;
-    transition-duration:375ms;
-    border-left:1px solid black;
-    transition-property:box-shadow,transform, border-left;
-    transition-timing-function:ease-in;
+    color:white;
 }
 .local {
     width:100vw;
