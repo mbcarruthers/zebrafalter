@@ -56,20 +56,3 @@ const MapView = () => {
 }
 export default MapView;
 
-// const originalControls = () => {
-//     return(
-//         <LayersControl position="topright"  className="layer-control">
-//             <LayersControl.Overlay name="Monarch Observations">
-//                 <LayerGroup>
-//                     {createObservationMarkers(getEntitiesByTaxonId(MonarchTid))}
-//                 </LayerGroup>
-//             </LayersControl.Overlay>
-//             <LayersControl.Overlay name="Zebra Longwing Observations">
-//                 <LayerGroup>
-//                     {createObservationMarkers(getEntitiesByTaxonId(ZlTid))}
-//                 </LayerGroup>
-//             </LayersControl.Overlay>
-//         </LayersControl>
-//     )
-// }
-

@@ -7,13 +7,14 @@ import MapStore from "../MapStore";
 
 const MapControls = (props) => {
     const mapStore = useContext(MapStore.Context);
-    let { entityStore} = mapStore.state;
+    let {entityStore} = mapStore.state;
     const handleSubmitDate = () => {
         const date1 = document.getElementById("date1");
         const date2 = document.getElementById("date2")
         let d1 = date1.value;
-        let d2 = date2.value;
-        fetch(`\/\/localhost:8000/entities/search?taxon_id=48662&date1="${d1}"&date2="${d2}"`)
+        let d2 = date2.value; // Todo: Just pass date1.value & date2.value to the url
+        console.log(d1,d2);
+        fetch(`\/\/\localhost:8000/entities/search?date1="${d1}"&date2="${d2}"`)
             .then((res) => res.json())
             .then((entities) => {
                 if(entities.length !== 0) {
