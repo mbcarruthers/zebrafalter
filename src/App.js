@@ -36,3 +36,4 @@ const App = () => {
 }
 
 export default StoreProvider([MapStore.Provider], App);
+
